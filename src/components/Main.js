@@ -16,6 +16,7 @@ function Main({
 
   return (
     <main className="content">
+
       <section id="profile" className="profile content__section">
         <span className="profile__avatar-edit-btn" onClick={onEditAvatar}>
           <img
@@ -60,6 +61,7 @@ function Main({
           })}
         </ul>
       </section>
+
     </main>
   );
 }

@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import {Route, Routes} from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
@@ -19,25 +20,19 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
     React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-
   const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
-
   /** Состояние выбранной для просмотра карточки */
   const [selectedCard, setSelectedCard] = React.useState({});
-
   /** Состояние текущего пользователя */
   const [currentUser, setCurrentUser] = React.useState({
     name: '',
     about: '',
   });
-
   /** Состояние массива карточек */
   const [cards, setCards] = React.useState([]);
   // console.log(cards);
-
   /** Состояние выбранной для удаления карточки */
   const [deleteCard, setDeleteCard] = React.useState({_id: ""});
-
 
   /** Открывает всплывающее редактирование аватара */
   function handleEditAvatarClick() {
@@ -141,25 +136,36 @@ function App() {
     })
         .catch((err) => {
           console.log(`Ошибка данных при загрузке аватара или карточек: ${err}`);
-        });
+        })
+        // .finally(() => setIsLoading(false));
   }, [])
-
 
 
   return (
     <div className="page__container">
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
-        <Main
-          onEditAvatar={handleEditAvatarClick}
-          onEditProfile={handleEditProfileClick}
-          onAddPlace={handleAddPlaceClick}
 
-          cards={cards}
-          onCardClick={handleCardClick}
-          onCardLike={handleCardLike} //лайк/дизлайк
-          onCardDelete={handleCardDelete}
-        />
+          <Routes>
+              <Route exact path='/'
+                     element={
+                      <Main
+                          onEditAvatar={handleEditAvatarClick}
+                          onEditProfile={handleEditProfileClick}
+                          onAddPlace={handleAddPlaceClick}
+
+                          cards={cards}
+                          onCardClick={handleCardClick}
+                          onCardLike={handleCardLike} //лайк/дизлайк
+                          onCardDelete={handleCardDelete}
+                      /> }
+              />
+
+              <Route path='/sign-up' />
+              <Route path='/sign-in' /> 
+
+          </Routes>
+
         <Footer />
 
 
@@ -181,7 +187,6 @@ function App() {
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
         />
-
 
         <PopupWithForm />
 
