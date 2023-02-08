@@ -25,7 +25,6 @@ function Main({
             alt="бюст улыбающегося человека в красной шапке"
           />
         </span>
-
         <div className="profile__elements-wrap">
           <div className="profile__name-wrap">
             <h1 className="profile__name">{currentUser.name}</h1>

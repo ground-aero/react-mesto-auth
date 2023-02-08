@@ -17,9 +17,6 @@
 
 @media (max-width: 767px) {
   .footer {
-    padding-top: 48px;
-    padding-bottom: 36px;
-    padding-left: 19px;
-    padding-right: 19px;
+    padding: 48px 19px 36px;
   }
 }

@@ -7,6 +7,15 @@
 @import url(./blocks/header/header.css);
 @import url(./blocks/header/__logo/header__logo.css);
 
+@import url(./blocks/entry/entry.css);
+@import url(./blocks/entry/_form/entry_form.css);
+@import url(./blocks/entry/__title/entry__title.css);
+@import url(./blocks/entry/__wrap-form/entry__wrap-form.css);
+@import url(./blocks/entry/__input/entry__input.css);
+@import url(./blocks/entry/__btn-submit/entry__btn-submit.css);
+@import url(./blocks/entry/__quest/entry__quest.css);
+@import url(./blocks/entry/__link/entry__link.css);
+
 @import url(./blocks/content/content.css);
 @import url(./blocks/content/__section/content__section.css);
 

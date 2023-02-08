@@ -11,6 +11,9 @@ import EditProfilePopup from '../components/EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 
+import Login from './Login';
+import Signup from "./Signup";
+
 /**
  * @returns {JSX.Element}
  */
@@ -146,7 +149,13 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
 
+          <Signup />
+          <Login />
+
           <Routes>
+              <Route path='/sign-up' />
+              <Route path='/sign-in' />
+
               <Route exact path='/'
                      element={
                       <Main
@@ -160,10 +169,6 @@ function App() {
                           onCardDelete={handleCardDelete}
                       /> }
               />
-
-              <Route path='/sign-up' />
-              <Route path='/sign-in' /> 
-
           </Routes>
 
         <Footer />
