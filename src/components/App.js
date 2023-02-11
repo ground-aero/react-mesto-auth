@@ -1,23 +1,27 @@
 import React, {useEffect} from 'react';
-import {Route, Routes} from 'react-router-dom';
+
+import api from '../utils/api';
+import CurrentUserContext from '../contexts/CurrentUserContext';
+
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
-import ImagePopup from "./ImagePopup";
-import api from '../utils/api';
-import CurrentUserContext from '../contexts/CurrentUserContext';
 import EditProfilePopup from '../components/EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+import ImagePopup from "./ImagePopup";
 
+import {Route, Routes, useNavigate, Navigate} from 'react-router-dom';
 import Login from './Login';
-import Signup from "./Signup";
+import Register from "./Register";
 
 /**
  * @returns {JSX.Element}
  */
 function App() {
+    /** Функция принимает два аргумента: 1 — строка или число. 2 - объект с двумя полями:replace и state. */
+    const navigate = useNavigate();
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
     React.useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
@@ -36,6 +40,8 @@ function App() {
   // console.log(cards);
   /** Состояние выбранной для удаления карточки */
   const [deleteCard, setDeleteCard] = React.useState({_id: ""});
+  /** стейт-перемення loggedIn. Содержит статус пользователя — вошёл в систему или нет */
+  const [loggedIn, setLoggedIn] = React.useState(false)
 
   /** Открывает всплывающее редактирование аватара */
   function handleEditAvatarClick() {
@@ -144,17 +150,20 @@ function App() {
   }, [])
 
 
+
+    function goToNewPage() {
+        navigate('/new-page', { replace: true });
+    }
+
   return (
     <div className="page__container">
       <CurrentUserContext.Provider value={currentUser}>
         <Header />
 
-          <Signup />
-          <Login />
-
           <Routes>
-              <Route path='/sign-up' />
-              <Route path='/sign-in' />
+              <Route path='/sign-up' element={<Register />} />
+              <Route path='/sign-in' element={<Login />} />
+              <Route exact path='/' element={!loggedIn ? <Navigate to='/sign-in' replace/> : <Navigate to='/' replace/> } />
 
               <Route exact path='/'
                      element={
@@ -169,6 +178,7 @@ function App() {
                           onCardDelete={handleCardDelete}
                       /> }
               />
+
           </Routes>
 
         <Footer />

@@ -1,5 +1,6 @@
 import React from 'react';
 import EntryForm from "./EntryForm";
+import * as auth from '../auth'
 
 function Login () {
     return (

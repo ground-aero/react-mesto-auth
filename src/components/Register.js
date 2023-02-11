@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import EntryForm from "./EntryForm";
 
-function Signup () {
+function Register () {
     return (
         <section className="entry">
             <EntryForm name={'signup'} title={'Регистрация'} textButton={'Зарегистрироваться'}/>
@@ -11,4 +11,4 @@ function Signup () {
     )
 }
 
-export default Signup
+export default Register
