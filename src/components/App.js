@@ -11,11 +11,12 @@ import PopupWithForm from './PopupWithForm';
 import EditProfilePopup from '../components/EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
-import ImagePopup from "./ImagePopup";
+import ImagePopup from './ImagePopup';
+import InfoTooltip from './InfoTooltip';
 
 import {Route, Routes, useNavigate, Navigate} from 'react-router-dom';
 import Login from './Login';
-import Register from "./Register";
+import Register from './Register';
 
 /**
  * @returns {JSX.Element}
@@ -42,10 +43,16 @@ function App() {
   /** Состояние выбранной для удаления карточки */
   const [deleteCard, setDeleteCard] = React.useState({_id: ""});
   /** стейт-перемення loggedIn. Содержит статус пользователя — вошёл в систему или нет */
-  const [loggedIn, setLoggedIn] = React.useState(false)
+  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [isLoginPopupOpen, setIsLoginPopupOpen] = React.useState(false);
+  const [message, setMessage] = React.useState('');
 
     function handleLogin() {
         setLoggedIn(true);
+    }
+
+    function handleLoginSubmit() {
+        setIsLoginPopupOpen(true);
     }
 
   /** Открывает всплывающее редактирование аватара */
@@ -72,6 +79,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setSelectedCard({});
+      setIsLoginPopupOpen(false);
   }
 
   /** Устанавливает выбранную карточку по нажатию
@@ -171,7 +179,7 @@ function App() {
               <Route path='/sign-up' element={<Register />} />
               <Route path='/sign-in' element={<Login />} />
               {/* переадресация незалогиненного пользоватея на './sign-in' */}
-              <Route exact path='*' element={!loggedIn ? <Navigate to='/sign-in' replace/> : <Navigate to='/' replace/> } />
+              <Route exact path='/' element={!loggedIn ? <Navigate to='/sign-in' replace/> : <Navigate to='/' replace/> } />
 
               {/* ниже разместим защищённые маршруты * и передадим несколько пропсов: loggedIn, path, component */}
               <Route
@@ -225,6 +233,15 @@ function App() {
           onClose={closeAllPopups}
           name={'zoom'}
         />
+
+
+        <InfoTooltip
+          name={'tooltip'}
+          isOpen={isLoginPopupOpen}
+          onClose={closeAllPopups}
+            message={message}
+        />
+
       </CurrentUserContext.Provider>
     </div>
   );
