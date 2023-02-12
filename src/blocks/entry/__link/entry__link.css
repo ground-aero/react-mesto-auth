@@ -4,7 +4,7 @@
     font-weight: 400;
     line-height: 17px;
     margin: 0;
-    text-align: center;
+    padding-left: 7px;
     color: inherit;
     transition: .4s linear;
 }

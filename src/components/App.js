@@ -43,6 +43,10 @@ function App() {
   /** стейт-перемення loggedIn. Содержит статус пользователя — вошёл в систему или нет */
   const [loggedIn, setLoggedIn] = React.useState(false)
 
+    function handleLogin() {
+        setLoggedIn(true);
+    }
+
   /** Открывает всплывающее редактирование аватара */
   function handleEditAvatarClick() {
     // return document.querySelector('#overlay_avatar').classList.add('popup_opened')
@@ -158,7 +162,9 @@ function App() {
   return (
     <div className="page__container">
       <CurrentUserContext.Provider value={currentUser}>
-        <Header />
+        <Header
+            loggedIn={loggedIn}
+         />
 
           <Routes>
               <Route path='/sign-up' element={<Register />} />

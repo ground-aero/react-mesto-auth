@@ -1,7 +1,7 @@
 import React from 'react';
 
 function EntryForm (props) {
-    const { name, title, textButton } = props;
+    const { name, title, textButton } = props; //props из Login & Register
 
     return (
         <form className="entry_form" name={ name }>
