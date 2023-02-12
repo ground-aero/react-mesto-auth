@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 
 import api from '../utils/api';
 import CurrentUserContext from '../contexts/CurrentUserContext';
+import ProtectedRoute from './ProtectedRoute';// HOC
 
 import Header from './Header';
 import Main from './Main';
@@ -169,22 +170,29 @@ function App() {
           <Routes>
               <Route path='/sign-up' element={<Register />} />
               <Route path='/sign-in' element={<Login />} />
-              <Route exact path='/' element={!loggedIn ? <Navigate to='/sign-in' replace/> : <Navigate to='/' replace/> } />
+              {/* переадресация незалогиненного пользоватея на './sign-in' */}
+              <Route exact path='*' element={!loggedIn ? <Navigate to='/sign-in' replace/> : <Navigate to='/' replace/> } />
 
-              <Route exact path='/'
-                     element={
+              {/* ниже разместим защищённые маршруты * и передадим несколько пропсов: loggedIn, path, component */}
+              <Route
+                  exact path='/'
+                  element={
+                  <ProtectedRoute
+                    loggedIn={loggedIn}
+                    component={
                       <Main
-                          onEditAvatar={handleEditAvatarClick}
-                          onEditProfile={handleEditProfileClick}
-                          onAddPlace={handleAddPlaceClick}
+                        onEditAvatar={handleEditAvatarClick}
+                        onEditProfile={handleEditProfileClick}
+                        onAddPlace={handleAddPlaceClick}
 
-                          cards={cards}
-                          onCardClick={handleCardClick}
-                          onCardLike={handleCardLike} //лайк/дизлайк
-                          onCardDelete={handleCardDelete}
-                      /> }
+                        cards={cards}
+                        onCardClick={handleCardClick}
+                        onCardLike={handleCardLike} //лайк/дизлайк
+                        onCardDelete={handleCardDelete}
+                      />}
+                    />
+                }
               />
-
           </Routes>
 
         <Footer />
