@@ -17,6 +17,7 @@ import InfoTooltip from './InfoTooltip';
 import {Route, Routes, useNavigate, Navigate} from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
+import * as auth from "../utils/auth";
 
 /**
  * @returns {JSX.Element}
@@ -148,6 +149,23 @@ function App() {
             });
     }
 
+    function handleRegister({ password, email }) {
+        // обработчик регистрации
+       return auth.register(password, email)
+            .then((data) => {
+                setMessage('');
+                navigate('/sign-in');
+                // localStorage.setItem('token', data.token)
+                // history.push('/sign-in')
+            })
+            // .then((res) => {
+            //     console.log(res) //При успешной регистрации второй обработчик then вернёт токен JWT
+            // })
+            .catch((err) => {
+                console.log(`ошибка регистрации: ${err}`)
+            })
+    }
+
   useEffect(() => {
     Promise.all([api.getUser(), api.getAllCards()])
         .then(([userData, cardsData]) => {
@@ -176,7 +194,7 @@ function App() {
          />
 
           <Routes>
-              <Route path='/sign-up' element={<Register />} />
+              <Route path='/sign-up' element={<Register />} handleRegister={handleRegister} />
               <Route path='/sign-in' element={<Login />} />
               {/* переадресация незалогиненного пользоватея на './sign-in' */}
               <Route exact path='/' element={!loggedIn ? <Navigate to='/sign-in' replace/> : <Navigate to='/' replace/> } />
@@ -233,7 +251,6 @@ function App() {
           onClose={closeAllPopups}
           name={'zoom'}
         />
-
 
         <InfoTooltip
           name={'tooltip'}
