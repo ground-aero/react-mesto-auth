@@ -1,9 +1,8 @@
 import React from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import EntryForm from "./EntryForm";
-import * as auth from '../utils/auth';
 
-function Register ({handleRegister}) {//@props из App.js
+function Register ({handleRegister}) {//@props из App.js - аутентификация пользователя
 
     return (
         <section className="entry">

@@ -2,8 +2,7 @@ import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import * as auth from '../utils/auth';
 
-function EntryForm (props) {
-    const { name, title, textButton, handleSubmit } = props; //props из Login & Register
+function EntryForm ({ name, title, textButton, handleSubmit }) {//props из Login & Register
     const navigate = useNavigate();
 
     // const [formValue, setFormValue] = React.useState({
@@ -23,18 +22,21 @@ function EntryForm (props) {
     // }
     const handleChangeEmail = (e) => {
         setEmail(e.target.value);
+        console.log(email)
     }
     const handleChangePassword = (e) => {
         setPassword(e.target.value);
+        console.log(password)
     }
 
     const onSubmit = (e) => {
         e.preventDefault();
         // здесь обработчик регистрации
-        if (!email || !password) {
-            return;
-        }
+        // if (!password || !email) {
+        //     return;
+        // }
         handleSubmit(password, email)
+        console.log(password, email)
         // auth.register(password, email)
         //     .then((res) => {
         //         navigate('./sign-in', {replace: true})
@@ -51,8 +53,8 @@ function EntryForm (props) {
             {/*<p className="footer__autho">&copy; {new Date().getFullYear()} Mesto Russia</p>*/}
             <div className="entry__wrap-form">
                 <h2 className="entry__title">{ title }</h2>
-                <input className="entry__input" value={email} onChange={handleChangeEmail} type="email" placeholder="Email" minLength="2"/>
-                <input className="entry__input" value={password} onChange={handleChangePassword} type="password" placeholder="password" minLength="2"/>
+                <input className="entry__input" onChange={handleChangeEmail} value={email} type="email" placeholder="Email" minLength="2"/>
+                <input className="entry__input" onChange={handleChangePassword} value={password} type="password" placeholder="password" minLength="2"/>
             </div>
             <button className="entry__btn-submit" onSubmit={onSubmit} type="submit">{ textButton }</button>
         </form>
