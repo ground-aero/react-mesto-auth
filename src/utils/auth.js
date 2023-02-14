@@ -7,7 +7,7 @@ const SERVER_ERRORS = {
 }
 /** authentication of user - отправка рег данных*/
 export const register = (password, email) => {
-    console.log(password, email)
+    // console.log(password, email)
     return fetch(`${BASE_URL}/signup`, {
         method: 'POST',
         headers: {
@@ -29,12 +29,14 @@ export const register = (password, email) => {
             }
         })
         .then((res) => {
+            console.log(res)
             return res;
         })
-        .catch((err) => console.log(err));
+        .catch((err) => console.log(err));/** код: 400 - некорректно заполнено одно из полей */
 };
 
-export const authorize = (identifier, password) => {
+export const authorize = (password, email) => {
+    console.log(password, email)
     return fetch(`${BASE_URL}/signin`, {
         method: 'POST',
         headers: {
@@ -42,8 +44,9 @@ export const authorize = (identifier, password) => {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-            identifier,
-            password })
+            password,
+            email
+        })
     })
         .then((response => response.json()))
         .then((data) => {
@@ -52,5 +55,5 @@ export const authorize = (identifier, password) => {
                 return data;
             }
         })
-        .catch(err => console.log(err))
+        .catch(err => console.log(err))/** коды: 400 - не передано одно из полей;  401 - пользователь с email не найден  */
 };

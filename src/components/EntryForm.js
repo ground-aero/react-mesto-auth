@@ -2,7 +2,7 @@ import React from 'react';
 import {useNavigate} from 'react-router-dom';
 import * as auth from '../utils/auth';
 
-function EntryForm ({ name, title, textButton, handleSubmit }) {//props из Login & Register
+function EntryForm ({ name, title, textButton, handleSubmit }) {//props из Login, & Register
     const navigate = useNavigate();
 
     // const [formValue, setFormValue] = React.useState({
@@ -21,12 +21,12 @@ function EntryForm ({ name, title, textButton, handleSubmit }) {//props из Log
     //     });
     // }
     const handleChangeEmail = (e) => {
-        setEmail(e.target.value);
         console.log(email)
+        setEmail(e.target.value);
     }
     const handleChangePassword = (e) => {
-        setPassword(e.target.value);
         console.log(password)
+        setPassword(e.target.value);
     }
 
     const onSubmit = (e) => {
@@ -35,8 +35,8 @@ function EntryForm ({ name, title, textButton, handleSubmit }) {//props из Log
         // if (!password || !email) {
         //     return;
         // }
-        handleSubmit(password, email)
         console.log(password, email)
+        handleSubmit(password, email)
         // auth.register(password, email)
         //     .then((res) => {
         //         navigate('./sign-in', {replace: true})
@@ -44,7 +44,6 @@ function EntryForm ({ name, title, textButton, handleSubmit }) {//props из Log
         //     .then((res) => {
         //         console.log(res) //При успешной регистрации второй обработчик then вернёт токен JWT
         //     })
-
     }
 
 

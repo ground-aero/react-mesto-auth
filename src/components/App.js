@@ -149,12 +149,12 @@ function App() {
             });
     }
 
-    function handleRegister( password, email ) {
-        // обработчик регистрации
+    function handleRegister(password, email) {/** обработчик регистрации */
        return auth.register(password, email)
             .then(() => {
                 // .then((res) => {
                 //     console.log(res) //При успешной регистрации второй обработчик then вернёт токен JWT
+                // {data: {_id: "63ea50f8d4567c00131e6cda", email: "aeroportus24@mail.ru"}}
                 // })
                 // setMessage('');
                 // navigate('/sign-in');
@@ -164,6 +164,14 @@ function App() {
             .catch((err) => {
                 console.log(`ошибка регистрации: ${err}`)
             })
+    }
+
+    function handleLogin(password, email) {
+      return auth.authorize(password, email)
+          .then((res) => {
+              console.log(res)//token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2ViYTljMWQ0NTY3YzAwMTMxZTZkZWQiLCJpYXQiOjE2NzYzODg5NjN9.xqfEr2ZseE4KI0a9IIjIRC5O5yhBQq3J83LREaDey8w"
+              navigate('/', {replace: true});
+          })
     }
 
   useEffect(() => {
@@ -195,7 +203,7 @@ function App() {
 
           <Routes>
               <Route path='/sign-up' element={<Register handleRegister={handleRegister}/>}  />
-              <Route path='/sign-in' element={<Login />} />
+              <Route path='/sign-in' element={<Login handleLogin={handleLogin}/>} />
               {/* переадресация незалогиненного пользоватея на './sign-in' */}
               <Route exact path='/' element={!loggedIn ? <Navigate to='/sign-in' replace/> : <Navigate to='/' replace/> } />
 
