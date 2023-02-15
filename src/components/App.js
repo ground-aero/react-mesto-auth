@@ -47,6 +47,7 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [isLoginPopupOpen, setIsLoginPopupOpen] = React.useState(false);
     const [email, setEmail] = React.useState('');
+
     const [password, setPassword] = React.useState('');
   const [message, setMessage] = React.useState('');
 
@@ -161,8 +162,6 @@ function App() {
                 // })
                 // setMessage('');
                 // navigate('/sign-in');
-                setEmail('')
-                setPassword('')
                 navigate('/sign-in', {replace: true});
                   // localStorage.setItem('token', data.token)
             })
@@ -180,6 +179,7 @@ function App() {
             console.log(data)
               if (data) {
                   setLoggedIn(true)
+                  setEmail(email)
                   navigate('/', {replace: true});
               }
               // localStorage.setItem('token', data.token);/** сохраняем токен */
@@ -191,37 +191,53 @@ function App() {
           })
     }
 
-    // function handleTokenCheck() {/** @endpoint: '/users/me' */
-    //     const jwt = localStorage.getItem('token')
-    //     if (jwt) {// проверка, есть ли jwt токен в локальном хранилище браузера
-    //         auth.checkToken(jwt)
-    //             .then((res) => {
-    //                 if (res) {
-    //                     setLoggedIn(true)
-    //                     navigate('/', {replace: true})
-    //                 }
-    //             })
-    //     }
-    // }
+    function handleTokenCheck() {/** @endpoint: '/users/me' */
+        const jwt = localStorage.getItem('token')
+        if (jwt) {// проверка, есть ли jwt токен в локальном хранилище браузера
+            auth.checkToken(jwt)
+                .then((res) => {
+                    console.log(res)
+                    if (res.data) {
+                        setLoggedIn(true)
+                        setEmail(res.data.email)
+                        navigate('/', {replace: true})
+                    }
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+        }
+    }
+
+    /** Выход из приложения. Удаляем токен */
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        setLoggedIn(false);
+    }
 
     // useEffect(() => {
     //     handleTokenCheck()
     // }, [])
 
+    useEffect(() => {
+        loggedIn ? navigate('/') : navigate('/sign-in')
+    }, [loggedIn]);
+
   useEffect(() => {
-    Promise.all([api.getUser(), api.getAllCards()])
-        .then(([userData, cardsData]) => {
+    if (loggedIn) {
+        Promise.all([api.getUser(), api.getAllCards()])
+            .then(([userData, cardsData]) => {
 
-          setCurrentUser(userData);
+                setCurrentUser(userData);
 
-          setCards(cardsData);
-    })
-        .catch((err) => {
-          console.log(`Ошибка данных при загрузке аватара или карточек: ${err}`);
-        })
-        // .finally(() => setIsLoading(false));
-  }, [])
-
+                setCards(cardsData);
+            })
+            .catch((err) => {
+                console.log(`Ошибка данных при загрузке аватара или карточек: ${err}`);
+            })
+    }
+            // .finally(() => setIsLoading(false));
+  }, [loggedIn])
 
 
     function goToNewPage() {
@@ -233,35 +249,62 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <Header
             loggedIn={loggedIn}
+            email={email}
+            handleLogout={handleLogout}
          />
 
           <Routes>
 
-              {/* ниже разместим защищённые маршруты * и передадим несколько пропсов: loggedIn, path, component */}
-              <Route
-                  exact path='/'
-                  element={
-                  <ProtectedRoute
-                    loggedIn={loggedIn} >
-                      <Main
-                        onEditAvatar={handleEditAvatarClick}
-                        onEditProfile={handleEditProfileClick}
-                        onAddPlace={handleAddPlaceClick}
+              <Route path="/" element={loggedIn ? <Navigate to="/index" /> : <Navigate to="/sign-in" />} />
+              {/*<Route path="/" loggedIn={loggedIn}*/}
+              {/*       element={<ProtectedRoute element={Main}*/}
+              {/*                                onEditAvatar={handleEditAvatarClick}*/}
+              {/*                                onEditProfile={handleEditProfileClick}*/}
+              {/*                                onAddPlace={handleAddPlaceClick}*/}
 
-                        cards={cards}
-                        onCardClick={handleCardClick}
-                        onCardLike={handleCardLike} //лайк/дизлайк
-                        onCardDelete={handleCardDelete}
-                      />
-                  </ProtectedRoute>
-                }
-              />
+              {/*                                cards={cards}*/}
+              {/*                                onCardClick={handleCardClick}*/}
+              {/*                                onCardLike={handleCardLike} //лайк/дизлайк*/}
+              {/*                                onCardDelete={handleCardDelete}*/}
+              {/*       />}*/}
+              {/*/>*/}
+
+             {/*<ProtectedRoute*/}
+             {/*   exact path="/"*/}
+             {/*   loggedIn={loggedIn}*/}
+             {/*   component={Main}*/}
+             {/*       onEditAvatar={handleEditAvatarClick}*/}
+             {/*      onEditProfile={handleEditProfileClick}*/}
+             {/*      onAddPlace={handleAddPlaceClick}*/}
+
+             {/*      cards={cards}*/}
+             {/*      onCardClick={handleCardClick}*/}
+             {/*      onCardLike={handleCardLike} //лайк/дизлайк*/}
+             {/*      onCardDelete={handleCardDelete}*/}
+             {/*/>*/}
+
+              <Route
+                path="/index"
+                loggedIn={loggedIn}
+                element={<ProtectedRoute
+                 component={Main}
+                 onEditAvatar={handleEditAvatarClick}
+                 onEditProfile={handleEditProfileClick}
+                 onAddPlace={handleAddPlaceClick}
+
+                 cards={cards}
+                 onCardClick={handleCardClick}
+                 onCardLike={handleCardLike} //лайк/дизлайк
+                 onCardDelete={handleCardDelete}
+             />}
+            />
 
               <Route path='/sign-up' element={<Register handleRegister={handleRegister}/>}  />
               <Route path='/sign-in' element={<Login handleLogin={handleLogin}/>} />
               {/* переадресация незалогиненного пользоватея на './sign-in' */}
-              <Route path='/'
-                     element={!loggedIn ? <Navigate to='/sign-in' /> : <Navigate to='/' /> } />
+              {/*<Route path='/'*/}
+              {/*       element={loggedIn ? <Navigate to='/' replace/> : <Navigate to='/sign-in' replace/> }*/}
+              {/*/>*/}
 
           </Routes>
 

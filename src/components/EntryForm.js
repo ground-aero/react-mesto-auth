@@ -21,11 +21,11 @@ function EntryForm ({ name, title, textButton, handleSubmit }) {//props из Log
     //     });
     // }
     const handleChangeEmail = (e) => {
-        console.log(email)
+        // console.log(email)
         setEmail(e.target.value);
     }
     const handleChangePassword = (e) => {
-        console.log(password)
+        // console.log(password)
         setPassword(e.target.value);
     }
 

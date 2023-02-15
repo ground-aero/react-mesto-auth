@@ -65,12 +65,13 @@ export const checkToken = (token) => {
         headers: {
             'Accept': 'application/json',
             "Content-Type": "application/json",
-            "Authorization" : `Bearer ${localStorage.getItem('token')}`
+            "Authorization" : `Bearer ${token}`
         }
     })
         .then((res) => res.json())
-        .then((data) => {// {data: {email: aero@mail.ru, id_: '63ebb........'}}
-          console.log(data)
-            return data
-        })
+        // .then((data) => {// {data: {email: aero@mail.ru, id_: '63ebb........'}}
+        //   console.log(data)
+        //     return data
+        // })
+
 }
