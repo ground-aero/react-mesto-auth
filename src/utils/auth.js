@@ -28,10 +28,10 @@ export const register = (password, email) => {
                 return (e)
             }
         })
-        .then((res) => {
-            console.log(res)
-            return res;
-        })
+        // .then((res) => {
+        //     console.log(res)
+        //     return res;
+        // })
         .catch((err) => console.log(err));/** код: 400 - некорректно заполнено одно из полей */
 };
 
@@ -43,17 +43,34 @@ export const authorize = (password, email) => {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            password,
-            email
-        })
+        body: JSON.stringify({password, email})
     })
         .then((response => response.json()))
-        .then((data) => {
-            if (data.user){
-                localStorage.setItem('jwt', data.jwt);
-                return data;
-            }
-        })
+        // .then((data) => {/** выдает токен: {token: 'ryJjlwrethmrtghryn...'} */
+        //     console.log(data)
+        //     localStorage.setItem('token', data.token);/** сохраняем токен */
+        //     return data
+        //     // if (data.user){
+        //     //     return data;
+        //     // }
+        // })
         .catch(err => console.log(err))/** коды: 400 - не передано одно из полей;  401 - пользователь с email не найден  */
 };
+
+/** отправляем запрос на роут аутентификации */
+export const checkToken = (token) => {
+    console.log(token)
+    return fetch(`${BASE_URL}/users/me`, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            "Content-Type": "application/json",
+            "Authorization" : `Bearer ${localStorage.getItem('token')}`
+        }
+    })
+        .then((res) => res.json())
+        .then((data) => {// {data: {email: aero@mail.ru, id_: '63ebb........'}}
+          console.log(data)
+            return data
+        })
+}

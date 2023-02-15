@@ -46,11 +46,13 @@ function App() {
   /** стейт-перемення loggedIn. Содержит статус пользователя — вошёл в систему или нет */
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [isLoginPopupOpen, setIsLoginPopupOpen] = React.useState(false);
+    const [email, setEmail] = React.useState('');
+    const [password, setPassword] = React.useState('');
   const [message, setMessage] = React.useState('');
 
-    function handleLogin() {
-        setLoggedIn(true);
-    }
+    // function handleLogin() {
+    //     setLoggedIn(true);
+    // }
 
     function handleLoginSubmit() {
         setIsLoginPopupOpen(true);
@@ -149,15 +151,18 @@ function App() {
             });
     }
 
-    function handleRegister(password, email) {/** обработчик регистрации */
+    function handleRegister(password, email) {/** обработчик регистрации. @endpoint : /signin */
        return auth.register(password, email)
-            .then(() => {
+            .then((res) => {
+                console.log(res)
                 // .then((res) => {
                 //     console.log(res) //При успешной регистрации второй обработчик then вернёт токен JWT
                 // {data: {_id: "63ea50f8d4567c00131e6cda", email: "aeroportus24@mail.ru"}}
                 // })
                 // setMessage('');
                 // navigate('/sign-in');
+                setEmail('')
+                setPassword('')
                 navigate('/sign-in', {replace: true});
                   // localStorage.setItem('token', data.token)
             })
@@ -166,13 +171,42 @@ function App() {
             })
     }
 
-    function handleLogin(password, email) {
-      return auth.authorize(password, email)
-          .then((res) => {
-              console.log(res)//token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2ViYTljMWQ0NTY3YzAwMTMxZTZkZWQiLCJpYXQiOjE2NzYzODg5NjN9.xqfEr2ZseE4KI0a9IIjIRC5O5yhBQq3J83LREaDey8w"
-              navigate('/', {replace: true});
+    function handleLogin(password, email) {/** @end-point: '/signin' */
+        if (!password || !email) {
+            return;
+        }
+        return auth.authorize(password, email)
+          .then((data) => {/** выдает токен: {token: 'ryJjlwrethmrtghryn...'} */
+            console.log(data)
+              if (data) {
+                  setLoggedIn(true)
+                  navigate('/', {replace: true});
+              }
+              // localStorage.setItem('token', data.token);/** сохраняем токен */
+          //     (res) => {
+          //     console.log(res)//token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2ViYTljMWQ0NTY3YzAwMTMxZTZkZWQiLCJpYXQiOjE2NzYzODg5NjN9.xqfEr2ZseE4KI0a9IIjIRC5O5yhBQq3J83LREaDey8w"
+          })
+          .catch((err) => {
+              console.log(`ошибка при логине ${err}`)
           })
     }
+
+    // function handleTokenCheck() {/** @endpoint: '/users/me' */
+    //     const jwt = localStorage.getItem('token')
+    //     if (jwt) {// проверка, есть ли jwt токен в локальном хранилище браузера
+    //         auth.checkToken(jwt)
+    //             .then((res) => {
+    //                 if (res) {
+    //                     setLoggedIn(true)
+    //                     navigate('/', {replace: true})
+    //                 }
+    //             })
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     handleTokenCheck()
+    // }, [])
 
   useEffect(() => {
     Promise.all([api.getUser(), api.getAllCards()])
@@ -202,18 +236,13 @@ function App() {
          />
 
           <Routes>
-              <Route path='/sign-up' element={<Register handleRegister={handleRegister}/>}  />
-              <Route path='/sign-in' element={<Login handleLogin={handleLogin}/>} />
-              {/* переадресация незалогиненного пользоватея на './sign-in' */}
-              <Route exact path='/' element={!loggedIn ? <Navigate to='/sign-in' replace/> : <Navigate to='/' replace/> } />
 
               {/* ниже разместим защищённые маршруты * и передадим несколько пропсов: loggedIn, path, component */}
               <Route
                   exact path='/'
                   element={
                   <ProtectedRoute
-                    loggedIn={loggedIn}
-                    component={
+                    loggedIn={loggedIn} >
                       <Main
                         onEditAvatar={handleEditAvatarClick}
                         onEditProfile={handleEditProfileClick}
@@ -223,10 +252,17 @@ function App() {
                         onCardClick={handleCardClick}
                         onCardLike={handleCardLike} //лайк/дизлайк
                         onCardDelete={handleCardDelete}
-                      />}
-                    />
+                      />
+                  </ProtectedRoute>
                 }
               />
+
+              <Route path='/sign-up' element={<Register handleRegister={handleRegister}/>}  />
+              <Route path='/sign-in' element={<Login handleLogin={handleLogin}/>} />
+              {/* переадресация незалогиненного пользоватея на './sign-in' */}
+              <Route path='/'
+                     element={!loggedIn ? <Navigate to='/sign-in' /> : <Navigate to='/' /> } />
+
           </Routes>
 
         <Footer />

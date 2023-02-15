@@ -37,6 +37,8 @@ function EntryForm ({ name, title, textButton, handleSubmit }) {//props из Log
         // }
         console.log(password, email)
         handleSubmit(password, email)
+        setPassword('')
+        setEmail('')
         // auth.register(password, email)
         //     .then((res) => {
         //         navigate('./sign-in', {replace: true})
