@@ -16,13 +16,13 @@ function Header(props) {
                         <Route path='/sign-up' element={<Link to='/sign-in' className="header__menu-link">Войти</Link>} />
                         <Route path='/sign-in' element={<Link to='/sign-up' className="header__menu-link">Регистрация</Link>} />
                     </Routes>
-                }
+                 }
                 {props.loggedIn &&
                     (
                         <>
                             <span className="header__logout-wrap">
                                 <p className="header__menu-text">{props.email}</p>
-                                <a onClick={props.handleLogout} className="header__menu-link">Выйти</a>
+                                <a onClick={props.onLogout} className="header__menu-link">Выйти</a>
                             </span>
                         </>
                     )

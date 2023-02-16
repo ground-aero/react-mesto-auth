@@ -18,6 +18,7 @@ import {Route, Routes, useNavigate, Navigate } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
 import * as auth from "../utils/auth";
+import {NoMatch} from "./NoMatch";
 
 /**
  * @returns {JSX.Element}
@@ -210,26 +211,24 @@ function App() {
     }
 
     /** Выход из приложения. Удаляем токен */
-    const handleLogout = () => {
-        localStorage.removeItem('token');
+    function onLogout() {
         setLoggedIn(false);
+        localStorage.removeItem('token');
     }
 
-    // useEffect(() => {
-    //     handleTokenCheck()
-    // }, [])
-
     useEffect(() => {
-        loggedIn ? navigate('/') : navigate('/sign-in')
-    }, [loggedIn]);
+        handleTokenCheck()
+    }, [])
+
+    // useEffect(() => {
+    //     loggedIn ? navigate('/') : navigate('sign-in')
+    // }, [loggedIn]);
 
   useEffect(() => {
     if (loggedIn) {
         Promise.all([api.getUser(), api.getAllCards()])
             .then(([userData, cardsData]) => {
-
                 setCurrentUser(userData);
-
                 setCards(cardsData);
             })
             .catch((err) => {
@@ -250,12 +249,12 @@ function App() {
         <Header
             loggedIn={loggedIn}
             email={email}
-            handleLogout={handleLogout}
+            onLogout={onLogout}
          />
 
           <Routes>
 
-              <Route path="/" element={loggedIn ? <Navigate to="/index" /> : <Navigate to="/sign-in" />} />
+              <Route exact path="/" element={loggedIn ? <Navigate to="/" /> : <Navigate to="sign-in" />} />
               {/*<Route path="/" loggedIn={loggedIn}*/}
               {/*       element={<ProtectedRoute element={Main}*/}
               {/*                                onEditAvatar={handleEditAvatarClick}*/}
@@ -284,10 +283,10 @@ function App() {
              {/*/>*/}
 
               <Route
-                path="/index"
+                path="/"
                 loggedIn={loggedIn}
                 element={<ProtectedRoute
-                 component={Main}
+                 element={Main}
                  onEditAvatar={handleEditAvatarClick}
                  onEditProfile={handleEditProfileClick}
                  onAddPlace={handleAddPlaceClick}
@@ -299,12 +298,13 @@ function App() {
              />}
             />
 
-              <Route path='/sign-up' element={<Register handleRegister={handleRegister}/>}  />
-              <Route path='/sign-in' element={<Login handleLogin={handleLogin}/>} />
+              <Route path='sign-up' element={<Register handleRegister={handleRegister}/>}  />
+              <Route path='sign-in' element={<Login handleLogin={handleLogin}/>} />
               {/* переадресация незалогиненного пользоватея на './sign-in' */}
               {/*<Route path='/'*/}
               {/*       element={loggedIn ? <Navigate to='/' replace/> : <Navigate to='/sign-in' replace/> }*/}
               {/*/>*/}
+              <Route path="*" element={<NoMatch/>}/>
 
           </Routes>
 
