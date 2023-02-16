@@ -35,11 +35,6 @@ export const register = (password, email) => {
                     return Promise.reject(response.status)
                 }
         })
-        // .then((res) => {
-        //     console.log(res)
-        //     return res;
-        // })
-        // .catch((err) => console.log(err));/** код: 400 - некорректно заполнено одно из полей */
 };
 
 export const authorize = (password, email) => {
@@ -53,14 +48,6 @@ export const authorize = (password, email) => {
         body: JSON.stringify({password, email})
     })
         .then((response) => handleAuthRes(response) )
-        // .then((data) => {/** выдает токен: {token: 'ryJjlwrethmrtghryn...'} */
-        //     console.log(data)
-        //     localStorage.setItem('token', data.token);/** сохраняем токен */
-        //     return data
-        //     // if (data.user){
-        //     //     return data;
-        //     // }
-        // })
         .catch(err => console.log(err))/** коды: 400 - не передано одно из полей;  401 - пользователь с email не найден  */
 };
 
@@ -76,9 +63,5 @@ export const checkToken = (token) => {
         }
     })
         .then((res) => res.json())
-        // .then((data) => {// {data: {email: aero@mail.ru, id_: '63ebb........'}}
-        //   console.log(data)
-        //     return data
-        // })
 
 }
