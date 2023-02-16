@@ -173,6 +173,7 @@ function App() {
             console.log(data)/** выдает токен: {token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfa'} */
               if (data) {
                   setLoggedIn(true)
+                  localStorage.setItem('token', data.token)
                   setEmail(email)
                   navigate('/index', {replace: true});
               }
@@ -226,10 +227,6 @@ function App() {
     }
   }, [loggedIn]);
 
-
-    function goToNewPage() {
-        navigate('/new-page', { replace: true });
-    }
 
   return (
     <div className="page__container">
