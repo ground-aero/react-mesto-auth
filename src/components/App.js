@@ -181,13 +181,20 @@ function App() {
               if (data) {
                   setLoggedIn(true)
                   setEmail(email)
-                  navigate('/', {replace: true});
+                  navigate('/index', {replace: true});
               }
               // localStorage.setItem('token', data.token);/** сохраняем токен */
           })
           .catch((err) => {
               console.log(`ошибка при логине ${err}`)
           })
+    }
+
+    /** Выход из приложения. Удаляем токен */
+    function onLogout() {
+        setLoggedIn(false);
+        localStorage.removeItem('token');
+        navigate('/sign-in')
     }
 
     function handleTokenCheck() {/** @endpoint: '/users/me' */
@@ -206,13 +213,6 @@ function App() {
                     console.log(err)
                 })
         }
-    }
-
-    /** Выход из приложения. Удаляем токен */
-    function onLogout() {
-        setLoggedIn(false);
-        localStorage.removeItem('token');
-        navigate('/sign-in')
     }
 
     useEffect(() => {
@@ -282,34 +282,34 @@ function App() {
              {/*/>*/}
 
 
-              <Route path='/index' element={<Main
-                           onEditAvatar={handleEditAvatarClick}
-                           onEditProfile={handleEditProfileClick}
-                           onAddPlace={handleAddPlaceClick}
+              {/*<Route path='/index' element={<Main*/}
+              {/*             onEditAvatar={handleEditAvatarClick}*/}
+              {/*             onEditProfile={handleEditProfileClick}*/}
+              {/*             onAddPlace={handleAddPlaceClick}*/}
 
-                           cards={cards}
-                           onCardClick={handleCardClick}
-                           onCardLike={handleCardLike} //лайк/дизлайк
-                           onCardDelete={handleCardDelete}
-                    />}
-              />
+              {/*             cards={cards}*/}
+              {/*             onCardClick={handleCardClick}*/}
+              {/*             onCardLike={handleCardLike} //лайк/дизлайк*/}
+              {/*             onCardDelete={handleCardDelete}*/}
+              {/*      />}*/}
+              {/*/>*/}
 
-            {/*  <Route*/}
-            {/*    path="/"*/}
-            {/*    loggedIn={loggedIn}*/}
-            {/*    element={*/}
-            {/*      <ProtectedRoute*/}
-            {/*         element={Main}*/}
-            {/*         onEditAvatar={handleEditAvatarClick}*/}
-            {/*         onEditProfile={handleEditProfileClick}*/}
-            {/*         onAddPlace={handleAddPlaceClick}*/}
+              <Route
+                path="/index"
+                element={
+                  <ProtectedRoute
+                      loggedIn={loggedIn}
+                     element={Main}
+                     onEditAvatar={handleEditAvatarClick}
+                     onEditProfile={handleEditProfileClick}
+                     onAddPlace={handleAddPlaceClick}
 
-            {/*         cards={cards}*/}
-            {/*         onCardClick={handleCardClick}*/}
-            {/*         onCardLike={handleCardLike} //лайк/дизлайк*/}
-            {/*         onCardDelete={handleCardDelete}*/}
-            {/*      />}*/}
-            {/*/>*/}
+                     cards={cards}
+                     onCardClick={handleCardClick}
+                     onCardLike={handleCardLike} //лайк/дизлайк
+                     onCardDelete={handleCardDelete}
+                  />}
+            />
 
               <Route path='/sign-up' element={<Register handleRegister={handleRegister}/>}  />
               <Route path='/sign-in' element={<Login handleLogin={handleLogin}/>} />
