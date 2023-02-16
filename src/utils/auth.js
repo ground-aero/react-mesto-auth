@@ -53,7 +53,7 @@ export const authorize = (password, email) => {
 
 /** отправляем запрос на роут аутентификации */
 export const checkToken = (token) => {
-    console.log(token)
+    // console.log(token)
     return fetch(`${BASE_URL}/users/me`, {
         method: 'GET',
         headers: {

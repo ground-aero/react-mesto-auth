@@ -189,7 +189,7 @@ function App() {
     function onLogout() {
         setLoggedIn(false);
         localStorage.removeItem('token');
-        navigate('/sign-in')
+        navigate('/sign-in', {replace: true})
     }
 
     function handleTokenCheck() {/** @endpoint: '/users/me' */
@@ -201,7 +201,7 @@ function App() {
                     if (res) {
                         setLoggedIn(true)
                         setEmail(res.data.email)
-                        navigate('/', {replace: true})
+                        // navigate('/', {replace: true})
                     }
                 })
                 .catch((err) => {
