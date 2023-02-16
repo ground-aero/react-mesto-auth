@@ -175,7 +175,7 @@ function App() {
                   setLoggedIn(true)
                   localStorage.setItem('token', data.token)
                   setEmail(email)
-                  navigate('/index', {replace: true});
+                  navigate('/', {replace: true});
               }
               // localStorage.setItem('token', data.token);/** сохраняем токен */
           })
@@ -239,9 +239,9 @@ function App() {
 
           <Routes>
               {/* переадресация незалогиненного пользоватея на './sign-in' */}
-              <Route exact path="/" element={loggedIn ? <Navigate to="/index" /> : <Navigate to="/sign-in" />} />
+              {/*<Route exact path="/" element={loggedIn ? <Navigate to="/index" /> : <Navigate to="/sign-in" />} />*/}
               <Route
-                path="/index"
+                path="/"
                 element={
                   <ProtectedRoute
                       loggedIn={loggedIn}

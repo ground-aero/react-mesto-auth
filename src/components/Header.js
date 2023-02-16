@@ -3,6 +3,12 @@ import {Link, Routes, Route} from 'react-router-dom';
 import React from "react";
 
 function Header(props) {
+    const [currentUrl, setCurrentUrl] = React.useState('');
+
+    function chgUrl() {
+        setCurrentUrl(window.location.pathname);
+    }
+
     return (
         <header className="header">
 
@@ -12,10 +18,17 @@ function Header(props) {
                 </a>
 
                 {!props.loggedIn &&
-                    <Routes>
-                        <Route path='/sign-up' element={<Link to='/sign-in' className="header__menu-link">Войти</Link>} />
-                        <Route path='/sign-in' element={<Link to='/sign-up' className="header__menu-link">Регистрация</Link>} />
-                    </Routes>
+                    <>
+                     <Link className="header__menu-link" onClick={chgUrl}
+                           to={window.location.pathname === '/sign-up' ? '/sign-in' : '/sign-up'}>
+                         {window.location.pathname === '/sign-up' ? 'Войти' : 'Регистрация'}
+                     </Link>
+                    </>
+                    //
+                    // <Routes>
+                    //     <Route path='/sign-up' element={<Link to='/sign-in' className="header__menu-link">Войти</Link>} />
+                    //     <Route path='/sign-in' element={<Link to='/sign-up' className="header__menu-link">Регистрация</Link>} />
+                    // </Routes>
                  }
                 {props.loggedIn &&
                     (
