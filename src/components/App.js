@@ -163,7 +163,7 @@ function App() {
                 // })
                 // setMessage('');
                 // navigate('/sign-in');
-                navigate('/', {replace: true});
+                navigate('/sign-in', {replace: true});
                   // localStorage.setItem('token', data.token)
             })
             .catch((err) => {
