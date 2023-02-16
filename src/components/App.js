@@ -216,6 +216,7 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
+        navigate('/')
         Promise.all([api.getUser(), api.getAllCards()])
             .then(([userData, cardsData]) => {
                 setCurrentUser(userData);
@@ -224,6 +225,8 @@ function App() {
             .catch((err) => {
                 console.log(`Ошибка данных при загрузке аватара или карточек: ${err}`);
             })
+    } else {
+        navigate('/sign-up')
     }
   }, [loggedIn]);
 
