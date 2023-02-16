@@ -241,7 +241,7 @@ function App() {
               {/* переадресация незалогиненного пользоватея на './sign-in' */}
               {/*<Route exact path="/" element={loggedIn ? <Navigate to="/index" /> : <Navigate to="/sign-in" />} />*/}
               <Route
-                path="/"
+                exact path="/"
                 element={
                   <ProtectedRoute
                       loggedIn={loggedIn}
