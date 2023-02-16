@@ -13,12 +13,15 @@ import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import ImagePopup from './ImagePopup';
 import InfoTooltip from './InfoTooltip';
+import successIcon from '../images/tooltip_success.png';
+import unsucessIcon from '../images/tooltip_unsuccess.svg'
 
 import {Route, Routes, useNavigate, Navigate } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
 import * as auth from "../utils/auth";
 import {NoMatch} from "./NoMatch";
+
 
 /**
  * @returns {JSX.Element}
@@ -46,19 +49,13 @@ function App() {
   const [deleteCard, setDeleteCard] = React.useState({_id: ""});
   /** стейт-перемення loggedIn. Содержит статус пользователя — вошёл в систему или нет */
   const [loggedIn, setLoggedIn] = React.useState(false);
-  const [isLoginPopupOpen, setIsLoginPopupOpen] = React.useState(false);
     const [email, setEmail] = React.useState('');
-
     const [password, setPassword] = React.useState('');
-  const [message, setMessage] = React.useState('');
 
-    // function handleLogin() {
-    //     setLoggedIn(true);
-    // }
+    const [isSuccessTooltipOpen, setIsSuccessTooltipOpen] = React.useState(false);
+    const [isUnsuccessTooltipOpen, setIsUnsuccessTooltipOpen] = React.useState(false);
+    const [message, setMessage] = React.useState('');
 
-    function handleLoginSubmit() {
-        setIsLoginPopupOpen(true);
-    }
 
   /** Открывает всплывающее редактирование аватара */
   function handleEditAvatarClick() {
@@ -84,7 +81,9 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setSelectedCard({});
-      setIsLoginPopupOpen(false);
+
+      setIsSuccessTooltipOpen(false) /** закрытие Всплывашки "Успех регистрации" */
+      setIsUnsuccessTooltipOpen(false) /** закрытие Всплывашки "Ошибка регистрации" */
   }
 
   /** Устанавливает выбранную карточку по нажатию
@@ -163,10 +162,12 @@ function App() {
                 // })
                 // setMessage('');
                 // navigate('/sign-in');
+                setIsSuccessTooltipOpen(true)
                 navigate('/sign-in', {replace: true});
                   // localStorage.setItem('token', data.token)
             })
             .catch((err) => {
+                setIsUnsuccessTooltipOpen(true)
                 console.log(`ошибка регистрации: ${err}`)
             })
     }
@@ -186,6 +187,7 @@ function App() {
               // localStorage.setItem('token', data.token);/** сохраняем токен */
           })
           .catch((err) => {
+              setIsUnsuccessTooltipOpen(true)
               console.log(`ошибка при логине ${err}`)
           })
     }
@@ -323,20 +325,16 @@ function App() {
 
         <Footer />
 
-
         <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
             onUpdateAvatar={handleUpdateAvatar}
         />
-
-
         <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
             onUpdateUser={handleUpdateUser}
         />
-
         <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
@@ -352,12 +350,20 @@ function App() {
           name={'zoom'}
         />
 
-        <InfoTooltip
-          name={'tooltip'}
-          isOpen={isLoginPopupOpen}
+        <InfoTooltip /** Всплывашка: Регистрация успешна */
+          name='tooltip-success'
+          isOpen={isSuccessTooltipOpen}
           onClose={closeAllPopups}
-            message={message}
+          message='Вы успешно зарегистрировались!'
+          iconTooltip={successIcon}
         />
+          <InfoTooltip /** Всплывашка: Ошибка регистрации... */
+              name='tooltip-unsuccess'
+              isOpen={isUnsuccessTooltipOpen}
+              onClose={closeAllPopups}
+              message='Что-то пошло не так! Попробуйте еще раз.'
+              iconTooltip={unsucessIcon}
+          />
 
       </CurrentUserContext.Provider>
     </div>

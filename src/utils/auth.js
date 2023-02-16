@@ -1,10 +1,19 @@
 export const BASE_URL = 'https://auth.nomoreparties.co';
 
 /** Объект с ошибками сервера * { {"400": string, "401": string} } */
-const SERVER_ERRORS = {
-    400: "Одно из полей не заполнено или не прошло валидацию.",
-    401: "Пользователь с введенным email не найден."
+const SERVER_ERROR = {
+    400: "Одно из полей не заполнено или не прошло валидацию",
+    401: "Пользователь с введенным email не найден"
 }
+
+const handleAuthRes = (res) => {
+    if (res.status === 400 || res.status === 401) {
+        throw new Error(SERVER_ERROR[res.status]);
+    } else {
+        return res.json();
+    }
+};
+
 /** authentication of user - отправка рег данных*/
 export const register = (password, email) => {
     // console.log(password, email)
@@ -20,19 +29,17 @@ export const register = (password, email) => {
     })
         .then((response) => {
             console.log(response)
-            try {
-                if (response.status === 200){
+                if (response.ok){
                     return response.json();
+                } else {
+                    return Promise.reject(response.status)
                 }
-            } catch(e){
-                return (e)
-            }
         })
-        .then((res) => {
-            console.log(res)
-            return res;
-        })
-        .catch((err) => console.log(err));/** код: 400 - некорректно заполнено одно из полей */
+        // .then((res) => {
+        //     console.log(res)
+        //     return res;
+        // })
+        // .catch((err) => console.log(err));/** код: 400 - некорректно заполнено одно из полей */
 };
 
 export const authorize = (password, email) => {
@@ -45,7 +52,7 @@ export const authorize = (password, email) => {
         },
         body: JSON.stringify({password, email})
     })
-        .then((response => response.json()))
+        .then((response) => handleAuthRes(response) )
         // .then((data) => {/** выдает токен: {token: 'ryJjlwrethmrtghryn...'} */
         //     console.log(data)
         //     localStorage.setItem('token', data.token);/** сохраняем токен */
