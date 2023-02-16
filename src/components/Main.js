@@ -10,8 +10,8 @@ function Main({
   onCardLike,
   onCardDelete,
                 cards,
-                children
-}) {
+                children })
+                                {
   const currentUser = React.useContext(CurrentUserContext);
 
   return (

@@ -28,10 +28,10 @@ export const register = (password, email) => {
                 return (e)
             }
         })
-        // .then((res) => {
-        //     console.log(res)
-        //     return res;
-        // })
+        .then((res) => {
+            console.log(res)
+            return res;
+        })
         .catch((err) => console.log(err));/** код: 400 - некорректно заполнено одно из полей */
 };
 

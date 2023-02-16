@@ -62,8 +62,8 @@ function App() {
 
   /** Открывает всплывающее редактирование аватара */
   function handleEditAvatarClick() {
-    // return document.querySelector('#overlay_avatar').classList.add('popup_opened')
     setIsEditAvatarPopupOpen(true);
+      // return document.querySelector('#overlay_avatar').classList.add('popup_opened')
   }
   /** Открывает всплывающее редактирование профиля */
   function handleEditProfileClick() {
@@ -163,7 +163,7 @@ function App() {
                 // })
                 // setMessage('');
                 // navigate('/sign-in');
-                navigate('/sign-in', {replace: true});
+                navigate('/', {replace: true});
                   // localStorage.setItem('token', data.token)
             })
             .catch((err) => {
@@ -176,16 +176,14 @@ function App() {
             return;
         }
         return auth.authorize(password, email)
-          .then((data) => {/** выдает токен: {token: 'ryJjlwrethmrtghryn...'} */
-            console.log(data)
+          .then((data) => {
+            console.log(data)/** выдает токен: {token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfa'} */
               if (data) {
                   setLoggedIn(true)
                   setEmail(email)
                   navigate('/', {replace: true});
               }
               // localStorage.setItem('token', data.token);/** сохраняем токен */
-          //     (res) => {
-          //     console.log(res)//token : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2M2ViYTljMWQ0NTY3YzAwMTMxZTZkZWQiLCJpYXQiOjE2NzYzODg5NjN9.xqfEr2ZseE4KI0a9IIjIRC5O5yhBQq3J83LREaDey8w"
           })
           .catch((err) => {
               console.log(`ошибка при логине ${err}`)
@@ -198,7 +196,7 @@ function App() {
             auth.checkToken(jwt)
                 .then((res) => {
                     console.log(res)
-                    if (res.data) {
+                    if (res) {
                         setLoggedIn(true)
                         setEmail(res.data.email)
                         navigate('/', {replace: true})
@@ -214,11 +212,12 @@ function App() {
     function onLogout() {
         setLoggedIn(false);
         localStorage.removeItem('token');
+        navigate('/sign-in')
     }
 
     useEffect(() => {
         handleTokenCheck()
-    }, [])
+    }, []);
 
     // useEffect(() => {
     //     loggedIn ? navigate('/') : navigate('sign-in')
@@ -236,7 +235,7 @@ function App() {
             })
     }
             // .finally(() => setIsLoading(false));
-  }, [loggedIn])
+  }, [loggedIn]);
 
 
     function goToNewPage() {
@@ -254,7 +253,7 @@ function App() {
 
           <Routes>
 
-              <Route exact path="/" element={loggedIn ? <Navigate to="/" /> : <Navigate to="sign-in" />} />
+              <Route exact path="/" element={loggedIn ? <Navigate to="/index" /> : <Navigate to="/sign-in" />} />
               {/*<Route path="/" loggedIn={loggedIn}*/}
               {/*       element={<ProtectedRoute element={Main}*/}
               {/*                                onEditAvatar={handleEditAvatarClick}*/}
@@ -282,24 +281,38 @@ function App() {
              {/*      onCardDelete={handleCardDelete}*/}
              {/*/>*/}
 
-              <Route
-                path="/"
-                loggedIn={loggedIn}
-                element={<ProtectedRoute
-                 element={Main}
-                 onEditAvatar={handleEditAvatarClick}
-                 onEditProfile={handleEditProfileClick}
-                 onAddPlace={handleAddPlaceClick}
 
-                 cards={cards}
-                 onCardClick={handleCardClick}
-                 onCardLike={handleCardLike} //лайк/дизлайк
-                 onCardDelete={handleCardDelete}
-             />}
-            />
+              <Route path='/index' element={<Main
+                           onEditAvatar={handleEditAvatarClick}
+                           onEditProfile={handleEditProfileClick}
+                           onAddPlace={handleAddPlaceClick}
 
-              <Route path='sign-up' element={<Register handleRegister={handleRegister}/>}  />
-              <Route path='sign-in' element={<Login handleLogin={handleLogin}/>} />
+                           cards={cards}
+                           onCardClick={handleCardClick}
+                           onCardLike={handleCardLike} //лайк/дизлайк
+                           onCardDelete={handleCardDelete}
+                    />}
+              />
+
+            {/*  <Route*/}
+            {/*    path="/"*/}
+            {/*    loggedIn={loggedIn}*/}
+            {/*    element={*/}
+            {/*      <ProtectedRoute*/}
+            {/*         element={Main}*/}
+            {/*         onEditAvatar={handleEditAvatarClick}*/}
+            {/*         onEditProfile={handleEditProfileClick}*/}
+            {/*         onAddPlace={handleAddPlaceClick}*/}
+
+            {/*         cards={cards}*/}
+            {/*         onCardClick={handleCardClick}*/}
+            {/*         onCardLike={handleCardLike} //лайк/дизлайк*/}
+            {/*         onCardDelete={handleCardDelete}*/}
+            {/*      />}*/}
+            {/*/>*/}
+
+              <Route path='/sign-up' element={<Register handleRegister={handleRegister}/>}  />
+              <Route path='/sign-in' element={<Login handleLogin={handleLogin}/>} />
               {/* переадресация незалогиненного пользоватея на './sign-in' */}
               {/*<Route path='/'*/}
               {/*       element={loggedIn ? <Navigate to='/' replace/> : <Navigate to='/sign-in' replace/> }*/}
