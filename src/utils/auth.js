@@ -28,7 +28,7 @@ export const register = (password, email) => {
             email })
     })
         .then((response) => {
-            console.log(response)
+            // console.log(response)
                 if (response.ok){
                     return response.json();
                 } else {
@@ -38,7 +38,7 @@ export const register = (password, email) => {
 };
 
 export const authorize = (password, email) => {
-    console.log(password, email)
+    // console.log(password, email)
     return fetch(`${BASE_URL}/signin`, {
         method: 'POST',
         headers: {

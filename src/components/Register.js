@@ -7,7 +7,7 @@ function Register ({handleRegister}) {//@props из App.js - аутентифи�
     return (
         <section className="entry">
             <EntryForm name={'signup'} title={'Регистрация'} textButton={'Зарегистрироваться'} handleSubmit={handleRegister} />
-            <p className="entry__quest">Уже зарегистрированы? <Link className="entry__link">Войти</Link></p>
+            <p className="entry__quest">Уже зарегистрированы? <Link to='/sign-in' className="entry__link">Войти</Link></p>
         </section>
     )
 }

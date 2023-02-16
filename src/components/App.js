@@ -152,9 +152,8 @@ function App() {
     function handleRegister(password, email) {/** обработчик регистрации. @endpoint : /signin */
        return auth.register(password, email)
             .then((res) => {
-                console.log(res)
-                // console.log(res) //При успешной регистрации второй обработчик then вернёт токен JWT
-                // {data: {_id: "63ea50f8d4567c00131e6cda", email: "aeroportus24@mail.ru"}}
+                console.log(res) /** {data: {email: "asadfs@dfg.com", _id: "63ee5a01d4567c00131e70f7" }}
+                 При успешной регистрации второй обработчик then вернёт токен JWT */
                 setIsSuccessTooltipOpen(true)
                 navigate('/sign-in', {replace: true});
                 // localStorage.setItem('token', data.token)

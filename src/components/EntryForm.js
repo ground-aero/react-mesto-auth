@@ -1,8 +1,6 @@
 import React from 'react';
-import {useNavigate} from 'react-router-dom';
 
 function EntryForm ({ name, title, textButton, handleSubmit }) {//props из Login, & Register
-    const navigate = useNavigate();
 
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -12,17 +10,16 @@ function EntryForm ({ name, title, textButton, handleSubmit }) {//props из Log
         setEmail(e.target.value);
     }
     const handleChangePassword = (e) => {
-        // console.log(password)
         setPassword(e.target.value);
     }
 
+    /** универсальный обработчик: 1.регистрации, 2.авторизации */
     const onSubmit = (e) => {
         e.preventDefault();
-        // здесь обработчик регистрации
         // if (!password || !email) {
         //     return;
         // }
-        console.log(password, email)
+        // console.log(password, email)
         handleSubmit(password, email)
         setPassword('')
         setEmail('')
