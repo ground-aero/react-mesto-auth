@@ -27,7 +27,7 @@ function AddPlacePopup ({ isOpen, onClose, onAddPlace }) {
     React.useEffect(() => {
         setName('');
         setLink('');
-    }, []);
+    }, [isOpen]); /** тут нужно следить за isOpen, чтобы очищать инпуты при открытии попапа / сабмите формы */
 
     return (
         <PopupWithForm
