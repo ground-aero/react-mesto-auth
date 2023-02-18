@@ -76,7 +76,6 @@ function AddPlacePopup ({ isOpen, onClose, onAddPlace }) {
           </span>
         </PopupWithForm>
     )
-
 }
 
 export default AddPlacePopup
