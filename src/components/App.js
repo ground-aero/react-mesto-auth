@@ -219,7 +219,7 @@ function App() {
             })
             .catch((err) => {
                 setIsUnsuccessTooltipOpen(true)
-                console.log(`ошибка при логине ${err}`)
+                console.log(`ошибка при логине ${err}`)/** коды: 400 - не передано одно из полей;  401 - пользователь с email не найден  */
             })
     }
 

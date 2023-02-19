@@ -1,18 +1,6 @@
+import {checkResponse} from "./checkResponse";
+
 export const BASE_URL = 'https://auth.nomoreparties.co';
-
-/** Объект с ошибками сервера * { {"400": string, "401": string} } */
-const SERVER_ERROR = {
-    400: "Одно из полей не заполнено или не прошло валидацию",
-    401: "Пользователь с введенным email не найден"
-}
-
-const handleAuthRes = (res) => {
-    if (res.status === 400 || res.status === 401) {
-        throw new Error(SERVER_ERROR[res.status]);
-    } else {
-        return res.json();
-    }
-};
 
 /** authentication of user - отправка рег данных*/
 export const register = (password, email) => {
@@ -28,14 +16,7 @@ export const register = (password, email) => {
             email
         })
     })
-        .then((response) => {
-            // console.log(response)
-            if (response.ok) {
-                return response.json();
-            } else {
-                return Promise.reject(response.status)
-            }
-        })
+        .then(checkResponse)
 };
 
 export const authorize = (password, email) => {
@@ -48,8 +29,7 @@ export const authorize = (password, email) => {
         },
         body: JSON.stringify({password, email})
     })
-        .then((response) => handleAuthRes(response))
-        .catch(err => console.log(err))/** коды: 400 - не передано одно из полей;  401 - пользователь с email не найден  */
+        .then(checkResponse)
 };
 
 /** отправляем запрос на роут аутентификации */
@@ -63,6 +43,6 @@ export const checkToken = (token) => {
             "Authorization": `Bearer ${token}`
         }
     })
-        .then((res) => res.json())
+        .then(checkResponse)
 
 }

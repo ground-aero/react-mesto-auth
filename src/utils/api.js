@@ -15,6 +15,10 @@ export class Api {
          }
     }
 
+    _request(url, options) {
+        return fetch(url, options).then(this._onResponse)
+    }
+
     getAllInfo() {//метод ожидает массив промисов - Promise1, Promise2 ...
         return Promise.all([this.getUser(), this.getAllCards()])//вернет Promise
     }
@@ -27,6 +31,7 @@ export class Api {
         })
             .then(res => this._onResponse(res))
     }
+
     /** изменить данные пользователя (PATCH) */
     patchUser(formValue) {
         // console.log(formValue)
