@@ -4,7 +4,7 @@ import React from 'react';
 function ImagePopup({ card, name, onImageClick, onClose }) {
 
     return (
-            <div className={`popup popup_img-bg popup_type_${ name } ${card.link && 'popup_opened'} id="overlay_img-zoom`}>
+            <div className={`popup popup_img-bg popup_type_${ name } ${card.link && 'popup_opened'}`} id="overlay_img-zoom">
                 <div className="popup__container-img popup__container-img_type_zoomer">
                     <button
                         className="popup__close-img popup__btn-close opacity-transition opacity-transition_type_middle"

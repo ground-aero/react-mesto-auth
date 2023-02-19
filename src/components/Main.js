@@ -33,7 +33,7 @@ function Main({
               type="button"
               onClick={onEditProfile}
               aria-label="edit"
-            ></button>
+            />
           </div>
           <p className="profile__job">{currentUser.about}</p>
         </div>
