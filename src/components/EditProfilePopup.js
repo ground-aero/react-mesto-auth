@@ -33,7 +33,7 @@ function EditProfilePopup ({ isOpen, onClose, onUpdateUser, isLoading }) {
     React.useEffect(() => {
         setName(currentUser.name);
         setAbout(currentUser.about);
-    }, [currentUser, isOpen]); /** следим за isOpen(состоянием открытости), чтобы вставлять в инпуты данные пользователя, иначе, если мы удалим информацию из инпутов и просто закроем попап, то при следующем открытии инпуты будут пустые  */
+    }, [currentUser, isOpen]); /** следим за isOpen(состоянием открытости), чтобы вставленные в инпуты данные пользователя сохранялись при следующем открытии попапа */
 
     return (
         <PopupWithForm

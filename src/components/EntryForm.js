@@ -21,11 +21,14 @@ function EntryForm({ name, title, textButton, handleSubmit }) {//props из Logi
         // }
         // console.log(password, email)
         handleSubmit(password, email)
-        setPassword('')
-        setEmail('')
     }
 
+    React.useEffect(() => {
+        setPassword('')
+        setEmail('')
+    }, [])
 
+    /** Обработчик сабмита навешиватся только на тег form с событием submit, а не на кнопку сабмита */
     return (
         <form className="entry_form" name={ name } onSubmit={onSubmit}>
             <div className="entry__wrap-form">
@@ -35,7 +38,7 @@ function EntryForm({ name, title, textButton, handleSubmit }) {//props из Logi
                 <input className="entry__input" onChange={handleChangePassword} value={password} type="password"
                        placeholder="password" minLength="2"/>
             </div>
-            <button className="entry__btn-submit" onSubmit={onSubmit} type="submit">{ textButton }</button>
+            <button className="entry__btn-submit" type="submit">{ textButton }</button>
         </form>
     )
 }
