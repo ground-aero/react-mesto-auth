@@ -16,10 +16,6 @@ function EntryForm({ name, title, textButton, handleSubmit }) {//props из Logi
     /** универсальный обработчик: 1.регистрации, 2.авторизации */
     const onSubmit = (e) => {
         e.preventDefault();
-        // if (!password || !email) {
-        //     return;
-        // }
-        // console.log(password, email)
         handleSubmit(password, email)
     }
 

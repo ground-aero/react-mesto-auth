@@ -2,6 +2,11 @@ import {checkResponse} from "./checkResponse";
 
 export const BASE_URL = 'https://auth.nomoreparties.co';
 
+function request(url, options) {
+    // принимает два аргумента: урл и объект опций, как и `fetch`
+    return fetch(url, options).then(checkResponse)
+}
+
 /** authentication of user - отправка рег данных*/
 export const register = (password, email) => {
     // console.log(password, email)

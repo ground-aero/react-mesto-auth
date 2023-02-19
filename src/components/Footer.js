@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Footer () {
+function Footer() {
     return (
         <footer className="footer">
             <p className="footer__autho">&copy; {new Date().getFullYear()} Mesto Russia</p>
