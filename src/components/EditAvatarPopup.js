@@ -1,7 +1,7 @@
 import React from 'react'
 import PopupWithForm from "./PopupWithForm";
 
-function EditAvatarPopup ({ isOpen, onClose, onUpdateAvatar }) {
+function EditAvatarPopup ({ isOpen, onClose, onUpdateAvatar, isLoading }) {
 
     /** записываем объект, возвращаемый хуком, в переменную */
     const inputAvatarRef = React.useRef()
@@ -21,7 +21,7 @@ function EditAvatarPopup ({ isOpen, onClose, onUpdateAvatar }) {
             onSubmit={handleSubmit}
             title={'Заменить аватар'}
             name={'edit-avatar'}
-            textButton={'Сохранить'}
+            buttonText={ isLoading ? 'Сохранение...' : 'Сохранить' }
         >
           <span className="popup__input-field popup__input-field_wrap">
             <input

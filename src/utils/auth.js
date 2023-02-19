@@ -25,15 +25,16 @@ export const register = (password, email) => {
         },
         body: JSON.stringify({
             password,
-            email })
+            email
+        })
     })
         .then((response) => {
             // console.log(response)
-                if (response.ok){
-                    return response.json();
-                } else {
-                    return Promise.reject(response.status)
-                }
+            if (response.ok) {
+                return response.json();
+            } else {
+                return Promise.reject(response.status)
+            }
         })
 };
 
@@ -47,7 +48,7 @@ export const authorize = (password, email) => {
         },
         body: JSON.stringify({password, email})
     })
-        .then((response) => handleAuthRes(response) )
+        .then((response) => handleAuthRes(response))
         .catch(err => console.log(err))/** коды: 400 - не передано одно из полей;  401 - пользователь с email не найден  */
 };
 
@@ -59,7 +60,7 @@ export const checkToken = (token) => {
         headers: {
             'Accept': 'application/json',
             "Content-Type": "application/json",
-            "Authorization" : `Bearer ${token}`
+            "Authorization": `Bearer ${token}`
         }
     })
         .then((res) => res.json())

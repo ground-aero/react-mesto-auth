@@ -14,22 +14,22 @@ function Header(props) {
 
             <nav className="header__menu">
                 <a href="/" className="header__link" title="Place - Russia">
-                    <img src={logo} className="header__logo" alt="лого Mesto" />
+                    <img src={logo} className="header__logo" alt="лого Mesto"/>
                 </a>
 
                 {!props.loggedIn &&
                     <>
-                     <Link className="header__menu-link" onClick={chgUrl}
-                           to={window.location.pathname === '/sign-up' ? '/sign-in' : '/sign-up'}>
-                         {window.location.pathname === '/sign-up' ? 'Войти' : 'Регистрация'}
-                     </Link>
+                        <Link className="header__menu-link" onClick={chgUrl}
+                              to={window.location.pathname === '/sign-up' ? '/sign-in' : '/sign-up'}>
+                            {window.location.pathname === '/sign-up' ? 'Войти' : 'Регистрация'}
+                        </Link>
                     </>
                     //
                     // <Routes>
                     //     <Route path='/sign-up' element={<Link to='/sign-in' className="header__menu-link">Войти</Link>} />
                     //     <Route path='/sign-in' element={<Link to='/sign-up' className="header__menu-link">Регистрация</Link>} />
                     // </Routes>
-                 }
+                }
                 {props.loggedIn &&
                     (
                         <>

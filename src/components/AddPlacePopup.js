@@ -1,7 +1,7 @@
 import React from 'react'
 import PopupWithForm from "./PopupWithForm";
 
-function AddPlacePopup ({ isOpen, onClose, onAddPlace }) {
+function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }) {
 
     /** Стейт, в котором содержится значение инпута */
         // const [value, setValue] = React.useState('');
@@ -12,6 +12,7 @@ function AddPlacePopup ({ isOpen, onClose, onAddPlace }) {
     function handleChangeName(e) {
         setName(e.target.value);
     }
+
     function handleChangeLink(e) {
         setLink(e.target.value);
     }
@@ -19,7 +20,7 @@ function AddPlacePopup ({ isOpen, onClose, onAddPlace }) {
     function handleSubmit(e) {
         e.preventDefault();// Запрещаем браузеру переходить по адресу формы
         /** Передаём значения управляемых компонентов во внешний обработчик */
-        onAddPlace({ name, link });
+        onAddPlace({name, link});
     }
 
     /** После загрузки текущего пользователя из API
@@ -36,7 +37,8 @@ function AddPlacePopup ({ isOpen, onClose, onAddPlace }) {
             onSubmit={handleSubmit}
             title={'Новое место'}
             name={'place'}
-            textButton={'Создать'}
+            buttonText={ isLoading ? 'Сохранение...' : 'Создать' }
+            // textButton={'Создать'}
         >
           <span className="popup__input-field popup__input-field_wrap">
             <input

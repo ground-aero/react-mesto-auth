@@ -1,6 +1,6 @@
 import React from 'react';
 
-function EntryForm ({ name, title, textButton, handleSubmit }) {//props из Login, & Register
+function EntryForm({ name, title, textButton, handleSubmit }) {//props из Login, & Register
 
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
@@ -30,8 +30,10 @@ function EntryForm ({ name, title, textButton, handleSubmit }) {//props из Log
         <form className="entry_form" name={ name } onSubmit={onSubmit}>
             <div className="entry__wrap-form">
                 <h2 className="entry__title">{ title }</h2>
-                <input className="entry__input" onChange={handleChangeEmail} value={email} type="email" placeholder="Email" minLength="2"/>
-                <input className="entry__input" onChange={handleChangePassword} value={password} type="password" placeholder="password" minLength="2"/>
+                <input className="entry__input" onChange={handleChangeEmail} value={email} type="email"
+                       placeholder="Email" minLength="2"/>
+                <input className="entry__input" onChange={handleChangePassword} value={password} type="password"
+                       placeholder="password" minLength="2"/>
             </div>
             <button className="entry__btn-submit" onSubmit={onSubmit} type="submit">{ textButton }</button>
         </form>
