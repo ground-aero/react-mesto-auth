@@ -186,7 +186,7 @@ function App() {
             })
     }
 
-    function handleRegister(password, email) {/** обработчик регистрации. @endpoint : /signin */
+    function handleRegister(password, email) {/** @endpoint : /signin - обработчик регистрации.*/
         return auth.register(password, email)
             .then((res) => {
                 console.log(res)
@@ -223,8 +223,7 @@ function App() {
             })
     }
 
-    /** Выход из приложения. Удаляем токен */
-    function onLogout() {
+    function onLogout() {/** Выход из приложения. Удаляем токен */
         setLoggedIn(false);
         localStorage.removeItem('token');
         navigate('/sign-in', {replace: true})
@@ -233,14 +232,14 @@ function App() {
     function handleTokenCheck() {
         /** @endpoint: '/users/me' */
         const jwt = localStorage.getItem('token')
-        if (jwt) {// есть ли jwt токен в локальном хранилище браузера ?
+        if (jwt) {/** есть ли jwt токен в локальном хранилище браузера ? */
             auth.checkToken(jwt)
                 .then((res) => {
                     console.log(res)
                     if (res) {
                         setLoggedIn(true)
                         setEmail(res.data.email)
-                        // navigate('/', {replace: true})
+                        navigate('/', {replace: true}) /** автологин. Чтобы после перезагрузки не выкидывало снова в логин*/
                     }
                 })
                 .catch((err) => {

@@ -38,7 +38,6 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace, isLoading }) {
             title={'Новое место'}
             name={'place'}
             buttonText={ isLoading ? 'Сохранение...' : 'Создать' }
-            // textButton={'Создать'}
         >
           <span className="popup__input-field popup__input-field_wrap">
             <input
