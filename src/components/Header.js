@@ -13,14 +13,15 @@ function Header(props) {
         <header className="header">
 
             <nav className="header__menu">
-                <a href="/" className="header__link" title="Place - Russia">
+                {/** тут Требуется Link (вместо <a>), чтобы не перезагружалась страница */}
+                <Link to='/' className="header__link" title="Place - Russia">
                     <img src={logo} className="header__logo" alt="лого Mesto"/>
-                </a>
+                </Link>
 
                 {!props.loggedIn &&
                     <>
-                        <Link className="header__menu-link" onClick={chgUrl}
-                              to={window.location.pathname === '/sign-up' ? '/sign-in' : '/sign-up'}>
+                        <Link to={window.location.pathname === '/sign-up' ? '/sign-in' : '/sign-up'}
+                              className="header__menu-link" onClick={chgUrl}>
                             {window.location.pathname === '/sign-up' ? 'Войти' : 'Регистрация'}
                         </Link>
                     </>
