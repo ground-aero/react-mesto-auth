@@ -73,6 +73,25 @@ function App() {
     setIsImagePopupOpen(true);
   }
 
+  /** добавляем обработчик Escape:
+   * 1. переменная isOpen снаружи useEffect, в ней следим за всеми состояниями попапов. * Если хоть одно состояние true или не null, то какой-то попап открыт */
+  const isOpen = isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || selectedCard.link || isSuccessTooltipOpen || isUnsuccessTooltipOpen
+  /** значит, навешивать нужно обработчик. */
+  /** Объявляем функцию внутри useEffect, чтобы она не теряла свою ссылку при обновлении компонента. */
+  useEffect(() => {
+      function closeByEscape(evt) {
+          if(evt.key === 'Escape') {
+              closeAllPopups()
+          }
+       }
+       if(isOpen) {
+           document.addEventListener('keydown', closeByEscape)
+           return () => {
+            document.removeEventListener('keydown', closeByEscape)
+           }
+       }
+  }, [isOpen])
+
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
