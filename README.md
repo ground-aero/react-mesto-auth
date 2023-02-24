@@ -45,6 +45,7 @@ GitHub Pages: [https://ground-aero.github.io/react-mesto-auth](https://ground-ae
 #### `npm run build` Запуск приложения
 #### `npm run deploy` Сборка приложения
 
+### Checklist: [link](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-12.pdf) 
 
 ### ToDo:
 * адаптивность до width 320px
