@@ -1,5 +1,5 @@
 import logo from "../images/logo.svg";
-import {Link, Routes, Route} from 'react-router-dom';
+import {Link, Route} from 'react-router-dom';
 import React from "react";
 
 function Header(props) {
@@ -30,7 +30,7 @@ function Header(props) {
                         <>
                             <span className="header__logout-wrap">
                                 <p className="header__menu-text">{props.email}</p>
-                                <a onClick={props.onLogout} className="header__menu-link">Выйти</a>
+                                <button onClick={props.onLogout} className="header__menu-button">Выйти</button>
                             </span>
                         </>
                     )
