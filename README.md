@@ -45,6 +45,7 @@ GitHub Pages: [https://ground-aero.github.io/react-mesto-auth](https://ground-ae
 #### `npm run build` Запуск приложения
 #### `npm run deploy` Сборка приложения
 
+### Figma Template source: [link](https://www.figma.com/file/5H3gsn5lIGPwzBPby9jAOo/Sprint-14-RU?node-id=0%3A1) 
 ### Checklist: [link](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-12.pdf) 
 
 ### ToDo:
