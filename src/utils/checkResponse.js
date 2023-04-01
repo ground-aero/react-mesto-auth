@@ -13,9 +13,6 @@
 // };
 
 export function checkResponse(res) {
-    // тут проверка ответа
-    if (res.ok) {
-        return res.json();
-    }
-    return Promise.reject(`Ошибка ${res.status}`);
+    // проверка ответа
+    return res.ok ? res.json() : Promise.reject(`Ошибка ${res.status}`);
 }
