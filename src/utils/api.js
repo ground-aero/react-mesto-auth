@@ -8,18 +8,14 @@ export class Api {
     }
 
     _onResponse(res) {
-        if (res.ok) {
-            return res.json();//Promise.resolve()
-         } else {
-            return Promise.reject(`Ошибка ${res.status} ${res.statusText}`)
-         }
+      return res.ok ? res.json() : Promise.reject(`Ошибка ${res.status} ${res.statusText}`)
     }
 
     _request(url, options) {
         return fetch(url, options).then(this._onResponse)
     }
 
-    getAllInfo() {//метод ожидает массив промисов - Promise1, Promise2 ...
+    getAllInfo() { //метод ожидает массив промисов - Promise1, Promise2 ...
         return Promise.all([this.getUser(), this.getAllCards()])//вернет Promise
     }
 
@@ -28,8 +24,7 @@ export class Api {
         return fetch(`${this._serverUrl}/users/me`, {
             method: 'GET',
             headers: this._headers
-        })
-            .then(res => this._onResponse(res))
+        }).then(res => this._onResponse(res))
     }
 
     /** изменить данные пользователя (PATCH) */
@@ -42,8 +37,7 @@ export class Api {
                 name: formValue.name,
                 about: formValue.about,
             })
-        })
-            .then(res => this._onResponse(res))
+        }).then(res => this._onResponse(res))
     }
 
     /** заменить аватар (PATCH) */
@@ -52,16 +46,14 @@ export class Api {
             method: 'PATCH',
             headers: this._headers,
             body: JSON.stringify(formDataObject)// avatar: formValue.avatar,
-        })
-            .then(res => this._onResponse(res))
+        }).then(res => this._onResponse(res))
     }
 
     getAllCards() {
         return fetch(`${this._serverUrl}/cards/`, {
             method: 'GET',
             headers: this._headers,
-        })
-            .then(res => this._onResponse(res))
+        }).then(res => this._onResponse(res))
     }
 
     addNewCard({ name, link }) {
@@ -69,8 +61,7 @@ export class Api {
             method: 'POST',
             headers: this._headers,
             body: JSON.stringify({ name, link }),
-        })
-            .then(res => this._onResponse(res))
+        }).then(res => this._onResponse(res))
     }
 
     deleteCard(cardId) {
@@ -78,8 +69,7 @@ export class Api {
         return fetch(`${this._serverUrl}/cards/${cardId}`, {
             method: 'DELETE',
             headers: this._headers
-        })
-            .then(res => this._onResponse(res))
+        }).then(res => this._onResponse(res))
     }
 
 /** ставит/удаляет лайк
@@ -90,10 +80,8 @@ console.log(isLiked)
         return fetch(`${this._serverUrl}/cards/likes/${cardId}`, {
             method: isLiked?"DELETE":"PUT",
             headers: this._headers
-        })
-            .then(res => this._onResponse(res))
+        }).then(res => this._onResponse(res))
     }
-
 
 }
 
